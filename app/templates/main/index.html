@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2>Incidents</h2>
+    </div>
+    <div class="col text-end">
+        <a href="{{ url_for('incidents.create') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Create New Incident
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    {% for incident in incidents %}
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">{{ incident.title }}</h5>
+                <span class="badge bg-{{ 'success' if incident.status == 'resolved' else 'warning' if incident.status == 'in_progress' else 'danger' }}">
+                    {{ incident.status|title }}
+                </span>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ incident.description[:200] }}{% if incident.description|length > 200 %}...{% endif %}</p>
+                <div class="mb-2">
+                    <strong>Priority:</strong>
+                    <span class="badge bg-{{ 'danger' if incident.priority == 'high' else 'warning' if incident.priority == 'medium' else 'info' }}">
+                        {{ incident.priority|title }}
+                    </span>
+                </div>
+                <div class="mb-2">
+                    <strong>Created:</strong> {{ incident.created_at.strftime('%Y-%m-%d %H:%M') }}
+                </div>
+                {% if incident.assigned_to %}
+                <div class="mb-2">
+                    <strong>Assigned to:</strong> {{ incident.assignee.username }}
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('incidents.view', id=incident.id) }}" class="btn btn-primary btn-sm">View Details</a>
+                {% if current_user.is_admin() and incident.status != 'resolved' %}
+                <a href="{{ url_for('incidents.assign', id=incident.id) }}" class="btn btn-warning btn-sm">Assign</a>
+                {% endif %}
+                {% if (current_user.is_admin() or (current_user.is_support() and incident.assigned_to == current_user.id)) and incident.status != 'resolved' %}
+                <a href="{{ url_for('incidents.resolve', id=incident.id) }}" class="btn btn-success btn-sm">Resolve</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col">
+        <div class="alert alert-info">
+            No incidents found.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %} 

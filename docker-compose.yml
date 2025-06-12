@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - ./data:/app/data
+    environment:
+      - FLASK_APP=run.py
+      - FLASK_ENV=production
+      - SECRET_KEY=demo-secret-key-123  # Demo Credentials
+      - MAIL_SERVER=sandbox.smtp.mailtrap.io
+      - MAIL_PORT=2525
+      - MAIL_USE_TLS=True
+      - MAIL_USE_SSL=False
+      - MAIL_USERNAME=YOUR_MAILTRAP_USERNAME  # Demo Credentials
+      - MAIL_PASSWORD=YOUR_MAILTRAP_PASSWORD  # Demo Credentials
+      - MAIL_DEFAULT_SENDER=noreply@incidentradar.com
+    command: flask run --host=0.0.0.0

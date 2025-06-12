@@ -1,0 +1,38 @@
+2025-06-12 08:15:31,475 - app - INFO - Incident Manager startup
+2025-06-12 08:17:00,705 - app - INFO - Preparing to send created notification for incident 5
+2025-06-12 08:17:00,711 - app - INFO - Created notification - Recipients: ['admin@example.com']
+2025-06-12 08:17:00,712 - app - INFO - Starting async email send
+2025-06-12 08:17:00,713 - app - INFO - Attempting to send email to: ['admin@example.com']
+2025-06-12 08:17:00,716 - app - INFO - Email subject: New Incident Created: Html
+2025-06-12 08:17:00,716 - app - INFO - SMTP settings: Server=sandbox.smtp.mailtrap.io, Port=2525
+2025-06-12 08:17:00,718 - app - INFO - Using credentials: Username=4f582e109f9a1b
+2025-06-12 08:17:01,143 - app - ERROR - Failed to send email: Connection unexpectedly closed
+2025-06-12 08:17:01,144 - app - ERROR - Error type: SMTPServerDisconnected
+2025-06-12 08:17:01,146 - app - ERROR - Traceback: Traceback (most recent call last):
+  File "/app/app/utils/email.py", line 17, in send_async_email
+    mail.send(msg)
+  File "/usr/local/lib/python3.9/site-packages/flask_mail.py", line 491, in send
+    with self.connect() as connection:
+  File "/usr/local/lib/python3.9/site-packages/flask_mail.py", line 144, in __enter__
+    self.host = self.configure_host()
+  File "/usr/local/lib/python3.9/site-packages/flask_mail.py", line 165, in configure_host
+    host.login(self.mail.username, self.mail.password)
+  File "/usr/local/lib/python3.9/smtplib.py", line 739, in login
+    (code, resp) = self.auth(
+  File "/usr/local/lib/python3.9/smtplib.py", line 642, in auth
+    (code, resp) = self.docmd("AUTH", mechanism + " " + response)
+  File "/usr/local/lib/python3.9/smtplib.py", line 432, in docmd
+    return self.getreply()
+  File "/usr/local/lib/python3.9/smtplib.py", line 405, in getreply
+    raise SMTPServerDisconnected("Connection unexpectedly closed")
+smtplib.SMTPServerDisconnected: Connection unexpectedly closed
+
+2025-06-12 08:20:15,562 - app - INFO - Incident Manager startup
+2025-06-12 08:24:38,678 - app - INFO - Incident Manager startup
+2025-06-12 08:27:36,675 - app - INFO - Preparing to send assigned notification for incident 10
+2025-06-12 08:27:36,678 - app - INFO - Assignment notification - Recipients: ['user@example.com', 'support@example.com']
+2025-06-12 08:27:36,678 - app - INFO - Attempting to send email...
+2025-06-12 08:27:36,679 - app - INFO - SMTP settings: Server=sandbox.smtp.mailtrap.io, Port=2525
+2025-06-12 08:27:36,893 - app - INFO - Attempting to login...
+2025-06-12 08:27:37,074 - app - INFO - Login successful, sending email...
+2025-06-12 08:27:37,209 - app - INFO - Email sent successfully!

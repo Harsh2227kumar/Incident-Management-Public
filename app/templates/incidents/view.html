@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">{{ incident.title }}</h4>
+                <span class="badge bg-{{ 'success' if incident.status == 'resolved' else 'warning' if incident.status == 'in_progress' else 'danger' }}">
+                    {{ incident.status|title }}
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <h5>Description</h5>
+                    <p class="card-text">{{ incident.description }}</p>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h5>Details</h5>
+                        <ul class="list-unstyled">
+                            <li><strong>Priority:</strong> 
+                                <span class="badge bg-{{ 'danger' if incident.priority == 'high' else 'warning' if incident.priority == 'medium' else 'info' }}">
+                                    {{ incident.priority|title }}
+                                </span>
+                            </li>
+                            <li><strong>Created by:</strong> {{ incident.creator.username }}</li>
+                            <li><strong>Created at:</strong> {{ incident.created_at.strftime('%Y-%m-%d %H:%M') }}</li>
+                            <li><strong>Last updated:</strong> {{ incident.updated_at.strftime('%Y-%m-%d %H:%M') }}</li>
+                            {% if incident.assigned_to %}
+                            <li><strong>Assigned to:</strong> {{ incident.assignee.username }}</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    {% if incident.resolution_notes %}
+                    <div class="col-md-6">
+                        <h5>Resolution Notes</h5>
+                        <p class="card-text">{{ incident.resolution_notes }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Back to List</a>
+                    {% if current_user.is_admin() and incident.status != 'resolved' %}
+                    <a href="{{ url_for('incidents.assign', id=incident.id) }}" class="btn btn-warning">Assign</a>
+                    {% endif %}
+                    {% if (current_user.is_admin() or (current_user.is_support() and incident.assigned_to == current_user.id)) and incident.status != 'resolved' %}
+                    <a href="{{ url_for('incidents.resolve', id=incident.id) }}" class="btn btn-success">Resolve</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

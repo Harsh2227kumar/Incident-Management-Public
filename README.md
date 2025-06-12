@@ -14,7 +14,7 @@ A Dockerized Flask application for managing tech support tickets and system inci
 - [🚀 Deployment Guide](#deployment-guide)
 - [🐛 Troubleshooting](#troubleshooting)
 
-## 📌 Project Overview
+## 📌 Project Overview (#project-overview)
 
 Incident Manager is a web-based application designed to streamline the process of managing technical incidents and support tickets. It provides a centralized platform for users to report issues, track their status, and receive notifications about updates.
 

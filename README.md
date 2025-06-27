@@ -14,6 +14,14 @@ A Dockerized Flask application for managing tech support tickets and system inci
 - [🚀 Deployment Guide](#deployment-guide)
 - [🐛 Troubleshooting](#troubleshooting)
 
+
+## Deliverables
+1. Terraform scripts (in the repo)
+2. Infrastructure diagram (diagram.png)
+3. Screenshots from both cloud dashboards (ss1.png, ss2.png, ss3.png)
+4. Deployment report with validation steps (given below)
+
+
 ## 📌 Project Overview (#project-overview)
 
 Incident Manager is a web-based application designed to streamline the process of managing technical incidents and support tickets. It provides a centralized platform for users to report issues, track their status, and receive notifications about updates.
@@ -365,32 +373,13 @@ CREATE TABLE incident (
 );
 ```
 
-## 🔐 Security Considerations
-
-### 🛡️ Authentication
-- Password hashing using scrypt
-- Session management with Flask-Login
-- CSRF protection with Flask-WTF
-
-### 🧼 Data Protection
-- SQL injection prevention with SQLAlchemy
-- XSS protection with template escaping
-- Input validation with WTForms
-
-### 📧 Email Security
-- TLS encryption for SMTP
-- Secure credential storage
-- Rate limiting for email sending
 
 ## 🚀 Deployment Guide
 
 ### 🏭 Production Deployment
 1. Set up a production database (PostgreSQL recommended)
 2. Configure a production email service
-3. Set up SSL/TLS certificates
-4. Use a production WSGI server (Gunicorn)
-5. Configure proper logging
-6. Set up monitoring and backups
+3. Use a production WSGI server (NGINX)
 
 ### 🔧 Environment Variables
 - `FLASK_ENV`: Set to 'production'
@@ -402,19 +391,16 @@ CREATE TABLE incident (
 
 ### ⚠️ Common Issues
 1. **Database Connection Issues**
-   - Check database URL
-   - Verify database permissions
-   - Check database logs
+   - Database permissions
+   - Database configuration
 
 2. **Email Sending Issues**
-   - Verify SMTP settings
-   - Check email credentials
-   - Review email server logs
+   - SMTP settings
+   - Email credentials
 
 3. **Authentication Issues**
-   - Verify user credentials
-   - Check session configuration
-   - Review authentication logs
+   - User credentials
+   - Session configuration
 
 ### 📝 Logging
 - Application logs in `logs/incident_manager.log`
@@ -428,6 +414,8 @@ CREATE TABLE incident (
 3. Commit your changes
 4. Push to the branch
 5. Create a Pull Request
+
+
 
 ## 📜 License
 
